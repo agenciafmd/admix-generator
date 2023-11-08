@@ -1,0 +1,19 @@
+<?php
+
+namespace :namespaceVendor:\:namespaceName:\Observers;
+
+use :namespaceVendor:\:namespaceName:\Models\:modelName:;
+use Illuminate\Support\Str;
+
+class :className:Observer
+{
+    public function saving(:modelName: $:modelVariableName:): void
+    {
+        $slug = Str::of($:modelVariableName:->name)
+            ->trim()
+            ->slug();
+        $count = $:modelVariableName:->whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")
+            ->count();
+        $:modelVariableName:->slug = $count ? "{$slug}-{$count}" : $slug;
+    }
+}

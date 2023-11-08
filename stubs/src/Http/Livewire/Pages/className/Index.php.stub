@@ -1,0 +1,22 @@
+<?php
+
+namespace :namespaceVendor:\:namespaceName:\Http\Livewire\Pages\:className:;
+
+use Agenciafmd\Admix\Http\Livewire\Pages\Base\Index as BaseIndex;
+use :namespaceVendor:\:namespaceName:\Models\:modelName:;
+
+class Index extends BaseIndex
+{
+    protected $model = :modelName:::class;
+    protected string $indexRoute = 'admix.:routeName:.index';
+    protected string $trashRoute = 'admix.:routeName:.trash';
+    protected string $creteRoute = 'admix.:routeName:.create';
+    protected string $editRoute = 'admix.:routeName:.edit';
+
+    public function configure(): void
+    {
+        $this->packageName = __(config('local-:packageName:.name'));
+
+        parent::configure();
+    }
+}

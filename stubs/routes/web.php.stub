@@ -1,0 +1,12 @@
+<?php
+
+use :namespaceVendor:\:namespaceName:\Http\Livewire\Pages;
+
+Route::get('/:routePath:', Pages\:className:\Index::class)
+    ->name('admix.:routeName:.index');
+Route::get('/:routePath:/trash', Pages\:className:\Index::class)
+    ->name('admix.:routeName:.trash');
+Route::get('/:routePath:/create', Pages\:className:\Form::class)
+    ->name('admix.:routeName:.create');
+Route::get('/:routePath:/{:routeModelBind:}/edit', Pages\:className:\Form::class)
+    ->name('admix.:routeName:.edit');

@@ -1,0 +1,29 @@
+{
+    "name": "agenciafmd/admix-generator",
+    "description": "Package Generator - Agência F&MD",
+    "homepage": "https://github.com/agenciafmd/admix-generator",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Irineu Junior",
+            "email": "irineu@fmd.ag",
+            "homepage": "https://fmd.ag/",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "laravel/framework": "^10.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Agenciafmd\\Generator\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Agenciafmd\\Generator\\Providers\\GeneratorServiceProvider"
+            ]
+        }
+    }
+}

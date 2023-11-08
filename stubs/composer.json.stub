@@ -1,0 +1,30 @@
+{
+    "name": ":packageVendor:/local-:packageName:",
+    "description": ":packageDescription:",
+    "authors": [
+        {
+            "name": ":authorName:",
+            "email": ":authorEmail:",
+            "homepage": "https://fmd.ag/",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "laravel/framework": "10.*"
+    },
+    "autoload": {
+        "psr-4": {
+            ":namespaceVendor:\\:namespaceName:\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                ":namespaceVendor:\\:namespaceName:\\Providers\\:modelName:ServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}

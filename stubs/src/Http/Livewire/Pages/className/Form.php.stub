@@ -1,0 +1,80 @@
+<?php
+
+namespace :namespaceVendor:\:namespaceName:\Http\Livewire\Pages\:className:;
+
+use :namespaceVendor:\:namespaceName:\Models\:modelName:;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\RedirectResponse;
+use Livewire\Component;
+use Livewire\Redirector;
+
+class Form extends Component
+{
+    use AuthorizesRequests;
+
+    public :modelName: $:modelVariableName:;
+
+    public function mount(:modelName: $:modelVariableName:): void
+    {
+        ($:modelVariableName:->id) ? $this->authorize('update', :modelName:::class) : $this->authorize('create', :modelName:::class);
+
+        $this->:modelVariableName: = $:modelVariableName:;
+        $this->:modelVariableName:->is_active ??= false;
+    }
+
+    public function rules(): array
+    {
+        return [
+            ':modelVariableName:.is_active' => [
+                'boolean',
+            ],
+            ':modelVariableName:.name' => [
+                'required',
+                'max:255',
+            ],
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'is_active' => __('local-:packageName:::fields.is_active'),
+            'name' => __('local-:packageName:::fields.name'),
+        ];
+    }
+
+    public function updated(string $field): void
+    {
+        $this->validateOnly($field, $this->rules(), [], $this->attributes());
+    }
+
+    public function submit(): null|RedirectResponse|Redirector
+    {
+        $this->validate($this->rules(), [], $this->attributes());
+
+        try {
+            if ($this->:modelVariableName:->save()) {
+                flash(__('crud.success.save'), 'success');
+            } else {
+                flash(__('crud.error.save'), 'error');
+            }
+
+            return redirect()->to(session()->get('backUrl') ?: route('admix.:routeName:.index'));
+        } catch (\Exception $exception) {
+            $this->emit('toast', [
+                'level' => 'danger',
+                'message' => $exception->getMessage(),
+            ]);
+
+            return null;
+        }
+    }
+
+    public function render(): View
+    {
+        return view(':viewNamespace:::pages.:directoryName:.form')
+            ->extends('admix::internal')
+            ->section('internal-content');
+    }
+}

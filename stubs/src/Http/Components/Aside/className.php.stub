@@ -1,0 +1,30 @@
+<?php
+
+namespace :namespaceVendor:\:namespaceName:\Http\Components\Aside;
+
+use Illuminate\Contracts\View\View;
+use Illuminate\View\Component;
+
+class :className: extends Component
+{
+    public function __construct(
+        public string $icon = '',
+        public string $label = '',
+        public string $url = '',
+        public bool   $active = false,
+        public bool   $visible = false,
+    )
+    {
+    }
+
+    public function render(): View
+    {
+        $this->icon = __(config('local-:packageName:.icon'));
+        $this->label = __(config('local-:packageName:.name'));
+        $this->url = route('admix.:routeName:.index');
+        $this->active = request()?->currentRouteNameStartsWith('admix.:routeName:');
+        $this->visible = true;
+
+        return view('admix::components.aside.item');
+    }
+}

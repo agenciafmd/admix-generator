@@ -1,0 +1,7 @@
+<?php
+
+use :namespaceVendor:\:namespaceName:\Models\:modelName:;
+
+return [
+    :modelName:::class => config('local-:packageName:.name'),
+];

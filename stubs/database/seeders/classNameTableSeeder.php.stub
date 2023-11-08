@@ -1,0 +1,40 @@
+<?php
+
+namespace :namespaceVendor:\:namespaceName:\Database\Seeders;
+
+use :namespaceVendor:\:namespaceName:\Models\:modelName:;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Collection;
+
+class :className:TableSeeder extends Seeder
+{
+    public function run(): void
+    {
+        :modelName:::query()
+            ->truncate();
+
+        $items = $this->items();
+
+        $this->command->getOutput()
+            ->progressStart($items->count());
+
+        $items->each(function ($item) {
+            :modelName:::create($item);
+
+            $this->command->getOutput()
+                ->progressAdvance();
+        });
+
+        $this->command->getOutput()
+            ->progressFinish();
+    }
+
+    private function items(): Collection
+    {
+        return collect([
+            [
+                'name' => 'Irineu Junior',
+            ],
+        ]);
+    }
+}

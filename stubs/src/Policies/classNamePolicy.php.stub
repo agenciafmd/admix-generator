@@ -1,0 +1,10 @@
+<?php
+
+namespace :namespaceVendor:\:namespaceName:\Policies;
+
+use Agenciafmd\Admix\Policies\AdmixPolicy;
+
+class :className:Policy extends AdmixPolicy
+{
+    //
+}
