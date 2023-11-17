@@ -2,6 +2,7 @@
 
 namespace :namespaceVendor:\:namespaceName:\Models;
 
+use Agenciafmd\Admix\Traits\WithScopes;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +13,7 @@ use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
 class :modelName: extends Model implements AuditableContract
 {
-    use SoftDeletes, Auditable;
+    use SoftDeletes, Auditable, WithScopes;
 
     protected $guarded = [
         //
