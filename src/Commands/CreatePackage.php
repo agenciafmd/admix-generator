@@ -90,7 +90,7 @@ class CreatePackage extends Command
             ->slug()
             ->__toString();
 
-        $this->data['viewNamespace'] = Str::of($packageName)
+        $this->data['viewNamespace'] = 'local-' . Str::of($packageName)
             ->plural()
             ->slug()
             ->__toString();
