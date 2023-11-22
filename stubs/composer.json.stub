@@ -14,13 +14,15 @@
     },
     "autoload": {
         "psr-4": {
-            ":namespaceVendor:\\:namespaceName:\\": "src/"
+            ":namespaceVendor:\\:namespaceName:\\": "src/",
+            ":namespaceVendor:\\:namespaceName:\\Database\\Factories\\": "database/factories/",
+            ":namespaceVendor:\\:namespaceName:\\Database\\Seeders\\": "database/seeders/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                ":namespaceVendor:\\:namespaceName:\\Providers\\:modelName:ServiceProvider"
+                ":namespaceVendor:\\:namespaceName:\\Providers\\:className:ServiceProvider"
             ]
         }
     },

@@ -8,33 +8,26 @@ use Illuminate\Support\Collection;
 
 class :className:TableSeeder extends Seeder
 {
+    protected int $total = 100;
+
     public function run(): void
     {
         :modelName:::query()
             ->truncate();
 
-        $items = $this->items();
-
         $this->command->getOutput()
-            ->progressStart($items->count());
+            ->progressStart($this->total);
 
-        $items->each(function ($item) {
-            :modelName:::create($item);
+        collect(range(1, $this->total))
+            ->each(function () {
+                :modelName:::factory()
+                    ->create();
 
-            $this->command->getOutput()
-                ->progressAdvance();
-        });
+                $this->command->getOutput()
+                    ->progressAdvance();
+            });
 
         $this->command->getOutput()
             ->progressFinish();
-    }
-
-    private function items(): Collection
-    {
-        return collect([
-            [
-                'name' => 'Irineu Junior',
-            ],
-        ]);
     }
 }

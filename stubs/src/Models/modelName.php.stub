@@ -5,6 +5,8 @@ namespace :namespaceVendor:\:namespaceName:\Models;
 use Agenciafmd\Admix\Traits\WithScopes;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use :namespaceVendor:\:namespaceName:\Database\Factories\:className:Factory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
@@ -13,7 +15,7 @@ use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
 class :modelName: extends Model implements AuditableContract
 {
-    use SoftDeletes, Auditable, WithScopes;
+    use Auditable, HasFactory, SoftDeletes, WithScopes;
 
     protected $guarded = [
         //
@@ -22,4 +24,18 @@ class :modelName: extends Model implements AuditableContract
     protected $casts = [
         'is_active' => 'boolean',
     ];
+
+    protected array $defaultSort = [
+        'is_active' => 'desc',
+        'name' => 'asc',
+    ];
+
+    protected static function newFactory(): :className:Factory
+    {
+        if (class_exists(\Database\Factories\:className:Factory::class)) {
+            return \Database\Factories\:className:Factory::new();
+        }
+
+        return :className:Factory::new();
+    }
 }
