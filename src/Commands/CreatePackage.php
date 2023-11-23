@@ -146,7 +146,14 @@ class CreatePackage extends Command
                 'symlink' => true,
             ],
         ];
+        ksort($composer['repositories']);
+
         $composer['require']["{$this->data['packageVendor']}/local-{$this->data['packageName']}"] = '*';
+        $requirePhp = $composer['require']['php'];
+        unset($composer['require']['php']);
+        ksort($composer['require']);
+        $composer['require'] = array_merge(['php' => $requirePhp], $composer['require']);
+
         file_put_contents(
             base_path('composer.json'),
             json_encode($composer, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . PHP_EOL
