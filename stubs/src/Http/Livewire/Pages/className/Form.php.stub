@@ -13,23 +13,23 @@ class Form extends Component
 {
     use AuthorizesRequests;
 
-    public :modelName: $:modelVariableName:;
+    public :modelName: $model;
 
     public function mount(:modelName: $:modelVariableName:): void
     {
         ($:modelVariableName:->id) ? $this->authorize('update', :modelName:::class) : $this->authorize('create', :modelName:::class);
 
-        $this->:modelVariableName: = $:modelVariableName:;
-        $this->:modelVariableName:->is_active ??= false;
+        $this->model = $:modelVariableName:;
+        $this->model->is_active ??= false;
     }
 
     public function rules(): array
     {
         return [
-            ':modelVariableName:.is_active' => [
+            'model.is_active' => [
                 'boolean',
             ],
-            ':modelVariableName:.name' => [
+            'model.name' => [
                 'required',
                 'max:255',
             ],
@@ -44,17 +44,12 @@ class Form extends Component
         ];
     }
 
-    public function updated(string $field): void
-    {
-        $this->validateOnly($field, $this->rules(), [], $this->attributes());
-    }
-
     public function submit(): null|RedirectResponse|Redirector
     {
         $this->validate($this->rules(), [], $this->attributes());
 
         try {
-            if ($this->:modelVariableName:->save()) {
+            if ($this->model->save()) {
                 flash(__('crud.success.save'), 'success');
             } else {
                 flash(__('crud.error.save'), 'error');
@@ -69,6 +64,11 @@ class Form extends Component
 
             return null;
         }
+    }
+
+    public function updated(string $field): void
+    {
+        $this->validateOnly($field, $this->rules(), [], $this->attributes());
     }
 
     public function render(): View
