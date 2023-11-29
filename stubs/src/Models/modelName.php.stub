@@ -3,6 +3,7 @@
 namespace :namespaceVendor:\:namespaceName:\Models;
 
 use Agenciafmd\Admix\Traits\WithScopes;
+use Agenciafmd\Admix\Traits\WithSlug;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use :namespaceVendor:\:namespaceName:\Database\Factories\:className:Factory;
@@ -15,7 +16,7 @@ use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
 class :modelName: extends Model implements AuditableContract
 {
-    use Auditable, HasFactory, SoftDeletes, WithScopes;
+    use Auditable, HasFactory, SoftDeletes, WithScopes, WithSlug;
 
     protected $guarded = [
         //

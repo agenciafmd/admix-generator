@@ -3,38 +3,11 @@
 namespace :namespaceVendor:\:namespaceName:\Observers;
 
 use :namespaceVendor:\:namespaceName:\Models\:modelName:;
-use Illuminate\Support\Str;
 
 class :className:Observer
 {
     public function saving(:modelName: $:modelVariableName:): void
     {
-        if ($slug = $this->generateSlug($:modelVariableName:)) {
-            $:modelVariableName:->slug = $slug;
-        }
-    }
-
-    private function generateSlug(:modelName: $:modelVariableName:): ?string
-    {
-        if ($:modelVariableName:->getRawOriginal('name') === $:modelVariableName:->name) {
-            return null;
-        }
-
-        $slug = Str::of($:modelVariableName:->name)
-            ->trim()
-            ->slug();
-        $lastSlug = $:modelVariableName:->withTrashed()
-            ->whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")
-            ->orderBy('slug', 'desc')
-            ->first()?->slug;
-        if (!$lastSlug) {
-            return $slug;
-        }
-
-        $lastSlugId = (int) Str::of($lastSlug)
-            ->afterLast('-')
-            ->__toString();
-
-        return ($lastSlugId >= 0) ? "{$slug}-" . ($lastSlugId + 1) : $slug;
+        //
     }
 }
