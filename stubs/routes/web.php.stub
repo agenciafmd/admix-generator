@@ -1,6 +1,7 @@
 <?php
 
 use :namespaceVendor:\:namespaceName:\Http\Livewire\Pages;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/:routePath:', Pages\:className:\Index::class)
     ->name('admix.:routeName:.index');

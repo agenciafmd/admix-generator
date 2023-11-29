@@ -31,7 +31,7 @@ class Form extends Component
             ],
             'model.name' => [
                 'required',
-                'max:255',
+                'max:200',
             ],
         ];
     }
