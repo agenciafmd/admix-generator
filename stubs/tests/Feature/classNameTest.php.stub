@@ -1,0 +1,101 @@
+<?php
+
+use :namespaceVendor:\:namespaceName:\Http\Livewire\Pages\:className:\Form;
+use :namespaceVendor:\:namespaceName:\Http\Livewire\Pages\:className:\Index;
+use :namespaceVendor:\:namespaceName:\Models\:modelName:;
+use Livewire\Livewire;
+
+it('can render index route of :routeName:', function () {
+    asAdmix()
+        ->get(route('admix.:routeName:.index'))
+        ->assertOk();
+});
+
+it('can see item on index route of :routeName:', function () {
+    $model = create(:modelName:::class);
+
+    asAdmix()
+        ->get(route('admix.:routeName:.index'))
+        ->assertOk()
+        ->assertSee($model->name);
+});
+
+it('can render create route of :routeName:', function () {
+    asAdmix()
+        ->get(route('admix.:routeName:.create'))
+        ->assertOk();
+});
+
+it('can insert item on create route of :routeName:', function () {
+    asAdmix();
+    $model = make(:modelName:::class);
+
+    Livewire::test(Form::class)
+        ->set('model.is_active', $model->is_active)
+        ->set('model.name', $model->name)
+        ->call('submit');
+
+    test()->assertDatabaseHas(table(:modelName:::class), [
+        'name' => $model->name,
+    ]);
+});
+
+it('can render and see a item on edit route of :routeName:', function () {
+    $model = create(:modelName:::class);
+
+    asAdmix()
+        ->get(route('admix.:routeName:.edit', $model))
+        ->assertOk()
+        ->assertSee($model->name);
+});
+
+it('can edit item on edit route of :routeName:', function () {
+    asAdmix();
+    $model = create(:modelName:::class);
+
+    Livewire::test(Form::class, ['faq' => $model->id])
+        ->set('model.name', $model->name . ' - edited')
+        ->call('submit');
+
+    test()->assertDatabaseHas(table(:modelName:::class), [
+        'name' => $model->name . ' - edited',
+    ]);
+});
+
+it('can delete item on index route of :routeName:', function () {
+    asAdmix();
+    $model = create(:modelName:::class);
+
+    Livewire::test(Index::class)
+        ->call('bulkDelete', $model->id);
+
+    test()->assertSoftDeleted(table(:modelName:::class), [
+        'id' => $model->id,
+    ]);
+});
+
+it('can render and see a item on trash route of :routeName:', function () {
+    $model = create(:modelName:::class);
+    $model->delete();
+
+    asAdmix()
+        ->get(route('admix.:routeName:.trash'))
+        ->assertOk()
+        ->assertSee($model->name);
+});
+
+it('can restore item on trash route of :routeName:', function () {
+    asAdmix();
+
+    $model = create(:modelName:::class);
+    $model->delete();
+
+    Livewire::test(Index::class)
+        ->set('isTrash', true)
+        ->call('bulkRestore', $model->id);
+
+    test()->assertDatabaseHas(table(:modelName:::class), [
+        'id' => $model->id,
+        'deleted_at' => null,
+    ]);
+});
