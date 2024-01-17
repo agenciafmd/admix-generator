@@ -64,11 +64,11 @@ class CreatePackage extends Command
 
         $this->data['className'] = $this->data['modelName'];
 
-        /* non standard */
         $this->data['routeName'] = Str::of($packageName)
-            ->plural()
+            ->singular()
             ->camel()
             ->__toString();
+        /* non standard */
         $this->data['routePath'] = Str::of($packageName)
             ->plural()
             ->slug()
