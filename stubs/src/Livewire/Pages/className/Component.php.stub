@@ -1,0 +1,55 @@
+<?php
+
+namespace :namespaceVendor:\:namespaceName:\Livewire\Pages\:className:;
+
+use :namespaceVendor:\:namespaceName:\Models\:modelName:;
+use Exception;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Validation\ValidationException;
+use Livewire\Component as LivewireComponent;
+use Livewire\Features\SupportRedirects\Redirector;
+
+class Component extends LivewireComponent
+{
+    use AuthorizesRequests;
+
+    public Form $form;
+
+    public :modelName: $:modelVariableName:;
+
+    public function mount(:modelName: $:modelVariableName:): void
+    {
+        ($:modelVariableName:->exists) ? $this->authorize('update', :modelName:::class) : $this->authorize('create', :modelName:::class);
+
+        $this->:modelVariableName: = $:modelVariableName:;
+        $this->form->setModel($:modelVariableName:);
+    }
+
+    public function submit(): null|Redirector|RedirectResponse
+    {
+        try {
+            if ($this->form->save()) {
+                flash(($this->:modelVariableName:->exists) ? __('crud.success.save') : __('crud.success.store'), 'success');
+            } else {
+                flash(__('crud.error.save'), 'error');
+            }
+
+            return redirect()->to(session()->get('backUrl') ?: route('admix.:routeName:.index'));
+        } catch (ValidationException $exception) {
+            throw $exception;
+        } catch (Exception $exception) {
+            $this->dispatch(event: 'toast', level: 'danger', message: $exception->getMessage());
+        }
+
+        return null;
+    }
+
+    public function render(): View
+    {
+        return view(':viewNamespace:::pages.:directoryName:.form')
+            ->extends('admix::internal')
+            ->section('internal-content');
+    }
+}

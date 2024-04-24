@@ -1,0 +1,56 @@
+<?php
+
+namespace :namespaceVendor:\:namespaceName:\Livewire\Pages\:className:;
+
+use :namespaceVendor:\:namespaceName:\Models\:modelName:;
+use Livewire\Attributes\Validate;
+use Livewire\Form as LivewireForm;
+
+class Form extends LivewireForm
+{
+    public :modelName: $:modelVariableName:;
+
+    #[Validate]
+    public bool $is_active = true;
+
+    #[Validate]
+    public string $name = '';
+
+    public function setModel(:modelName: $:modelVariableName:): void
+    {
+        $this->:modelVariableName: = $:modelVariableName:;
+        if ($:modelVariableName:->exists) {
+            $this->is_active = $:modelVariableName:->is_active;
+            $this->name = $:modelVariableName:->name;
+        }
+    }
+
+    public function rules(): array
+    {
+        return [
+            'is_active' => [
+                'boolean',
+            ],
+            'name' => [
+                'nullable',
+                'max:255',
+            ],
+        ];
+    }
+
+    public function validationAttributes(): array
+    {
+        return [
+            'is_active' => __('local-:packageName:::fields.is_active'),
+            'name' => __('local-:packageName:::fields.name'),
+        ];
+    }
+
+    public function save(): bool
+    {
+        $this->validate(rules: $this->rules(), attributes: $this->validationAttributes());
+        $this->:modelVariableName:->fill($this->except(':modelVariableName:'));
+
+        return $this->:modelVariableName:->save();
+    }
+}

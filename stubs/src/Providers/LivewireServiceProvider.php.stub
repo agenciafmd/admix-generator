@@ -2,7 +2,7 @@
 
 namespace :namespaceVendor:\:namespaceName:\Providers;
 
-use :namespaceVendor:\:namespaceName:\Http\Livewire\Pages;
+use :namespaceVendor:\:namespaceName:\Livewire\Pages;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 
@@ -10,8 +10,8 @@ class LivewireServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        Livewire::component(':packageVendor:.:packageName:.http.livewire.pages.:directoryName:.index', Pages\:className:\Index::class);
-        Livewire::component(':packageVendor:.:packageName:.http.livewire.pages.:directoryName:.form', Pages\:className:\Form::class);
+        Livewire::component(':packageVendor:.:packageName:.livewire.pages.:directoryName:.index', Pages\:className:\Index::class);
+        Livewire::component(':packageVendor:.:packageName:.livewire.pages.:directoryName:.component', Pages\:className:\Component::class);
     }
 
     public function register(): void

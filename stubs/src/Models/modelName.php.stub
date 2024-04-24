@@ -31,7 +31,7 @@ class :modelName: extends Model implements AuditableContract
         'name' => 'asc',
     ];
 
-    protected static function newFactory(): :className:Factory
+    protected static function newFactory(): :className:Factory|\Database\Factories\:className:Factory
     {
         if (class_exists(\Database\Factories\:className:Factory::class)) {
             return \Database\Factories\:className:Factory::new();

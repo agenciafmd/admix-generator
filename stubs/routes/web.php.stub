@@ -1,13 +1,13 @@
 <?php
 
-use :namespaceVendor:\:namespaceName:\Http\Livewire\Pages;
+use :namespaceVendor:\:namespaceName:\Livewire\Pages;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/:routePath:', Pages\:className:\Index::class)
     ->name('admix.:routeName:.index');
 Route::get('/:routePath:/trash', Pages\:className:\Index::class)
     ->name('admix.:routeName:.trash');
-Route::get('/:routePath:/create', Pages\:className:\Form::class)
+Route::get('/:routePath:/create', Pages\:className:\Component::class)
     ->name('admix.:routeName:.create');
-Route::get('/:routePath:/{:routeModelBind:}/edit', Pages\:className:\Form::class)
+Route::get('/:routePath:/{:routeModelBind:}/edit', Pages\:className:\Component::class)
     ->name('admix.:routeName:.edit');

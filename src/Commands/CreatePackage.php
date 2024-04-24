@@ -5,7 +5,6 @@ namespace Agenciafmd\Generator\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Process;
-use Illuminate\Support\Str;
 
 class CreatePackage extends Command
 {
@@ -21,7 +20,7 @@ class CreatePackage extends Command
         $authorEmail = $this->ask('What is your email?', $this->processRun('git config user.email'));
         $packageVendor = $this->ask('What is your package vendor?', 'Agenciafmd');
         $packageName = $this->ask('What is your package name?', 'Lead');
-        $packageName = Str::of($packageName)
+        $packageName = str($packageName)
             ->ucfirst()
             ->__toString();
         $packageDescription = $this->ask('What is your package about?', $packageName . ' - Agência F&MD');
@@ -30,71 +29,70 @@ class CreatePackage extends Command
         $this->data['authorName'] = $authorName;
         $this->data['authorEmail'] = $authorEmail;
 
-        $this->data['packageVendor'] = Str::of($packageVendor)
+        $this->data['packageVendor'] = str($packageVendor)
             ->lower()
             ->__toString();
-        $this->data['packageName'] = Str::of($packageName)
+        $this->data['packageName'] = str($packageName)
             ->plural()
             ->slug()
             ->__toString();
         $this->data['packageDescription'] = $packageDescription;
-        $this->data['packageFriendlyName'] = Str::of($packageName)
+        $this->data['packageFriendlyName'] = str($packageName)
             ->plural()
             ->lower()
             ->ucfirst()
             ->__toString();
         $this->data['packageIcon'] = $packageIcon;
 
-        $this->data['namespaceVendor'] = Str::of($packageVendor)
+        $this->data['namespaceVendor'] = str($packageVendor)
             ->studly()
             ->__toString();
-        $this->data['namespaceName'] = Str::of($packageName)
+        $this->data['namespaceName'] = str($packageName)
             ->plural()
             ->studly()
             ->__toString();
 
-        $this->data['modelVariableName'] = Str::of($packageName)
+        $this->data['modelVariableName'] = str($packageName)
             ->singular()
             ->camel()
             ->__toString();
-        $this->data['modelName'] = Str::of($packageName)
+        $this->data['modelName'] = str($packageName)
             ->singular()
             ->studly()
             ->__toString();
 
         $this->data['className'] = $this->data['modelName'];
 
-        $this->data['routeName'] = Str::of($packageName)
-            ->singular()
+        $this->data['routeName'] = str($packageName)
+            ->plural()
             ->camel()
             ->__toString();
-        /* non standard */
-        $this->data['routePath'] = Str::of($packageName)
+        $this->data['routePath'] = str($packageName)
             ->plural()
             ->slug()
             ->__toString();
-        $this->data['routeModelBind'] = Str::of($packageName)
+        $this->data['routeModelBind'] = str($packageName)
             ->singular()
             ->camel()
             ->__toString();
 
-        $this->data['migrationTable'] = Str::of($packageName)
+        $this->data['migrationTable'] = str($packageName)
             ->plural()
             ->snake()
             ->__toString();
         $this->data['migrationTimestamp'] = now()
             ->format('Y_m_d_His');
 
-        $this->data['directoryName'] = Str::of($packageName)
+        $this->data['directoryName'] = str($packageName)
             ->singular()
             ->slug()
             ->__toString();
 
-        $this->data['viewNamespace'] = 'local-' . Str::of($packageName)
-            ->plural()
-            ->slug()
-            ->__toString();
-        $this->data['viewDirectory'] = Str::of($packageName)
+        $this->data['viewNamespace'] = 'local-' . str($packageName)
+                ->plural()
+                ->slug()
+                ->__toString();
+        $this->data['viewDirectory'] = str($packageName)
             ->plural()
             ->studly()
             ->__toString();
@@ -128,7 +126,7 @@ class CreatePackage extends Command
     {
         $result = Process::run($command);
         if ($result->successful()) {
-            return Str::of($result->output())
+            return str($result->output())
                 ->trim()
                 ->__toString();
         }
@@ -173,7 +171,7 @@ class CreatePackage extends Command
                 return $path->getRelativePathname();
             })
             ->mapWithKeys(function ($source) {
-                $target = Str::of($source)
+                $target = str($source)
                     ->replace(array_keys($this->data), array_values($this->data))
                     ->replaceLast('.stub', '')
                     ->__toString();
