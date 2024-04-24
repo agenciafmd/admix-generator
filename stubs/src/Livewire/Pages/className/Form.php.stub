@@ -32,7 +32,7 @@ class Form extends LivewireForm
                 'boolean',
             ],
             'name' => [
-                'nullable',
+                'required',
                 'max:255',
             ],
         ];
