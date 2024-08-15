@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use :namespaceVendor:\:namespaceName:\Database\Factories\:className:Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Prunable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use OwenIt\Auditing\Auditable;
@@ -16,7 +17,7 @@ use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
 class :modelName: extends Model implements AuditableContract
 {
-    use Auditable, HasFactory, SoftDeletes, WithScopes, WithSlug;
+    use Auditable, HasFactory, Prunable, SoftDeletes, WithScopes, WithSlug;
 
     protected $guarded = [
         //
@@ -30,6 +31,11 @@ class :modelName: extends Model implements AuditableContract
         'is_active' => 'desc',
         'name' => 'asc',
     ];
+
+    public function prunable(): Builder
+    {
+        return self::where('deleted_at', '<=', now()->subYear());
+    }
 
     protected static function newFactory(): :className:Factory|\Database\Factories\:className:Factory
     {

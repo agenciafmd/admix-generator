@@ -6,6 +6,7 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
+use :namespaceVendor:\:namespaceName:\Models\:modelName:
 
 class CommandServiceProvider extends ServiceProvider
 {
@@ -27,6 +28,13 @@ class CommandServiceProvider extends ServiceProvider
 
         $this->app->booted(function () use ($minutes) {
             $schedule = $this->app->make(Schedule::class);
+
+            $schedule->command('model:prune', [
+                '--model' => [
+                    :modelName:::class,
+                ],
+            ])
+                ->dailyAt("03:{$minutes}");
         });
     }
 }
