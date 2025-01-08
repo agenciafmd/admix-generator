@@ -16,13 +16,13 @@ A package generator for Admix.
 ## Installation
 
 ```bash
-composer require agenciafmd/admix-generator --dev
+composer require agenciafmd/admix-generator:v11.x-dev --dev
 ```
 
 ## Create your first package
 
 ```bash
-php artisan admix:package
+php artisan admix:create-package
 ```
 
 ## License
