@@ -89,9 +89,9 @@ class CreatePackage extends Command
             ->__toString();
 
         $this->data['viewNamespace'] = 'local-' . str($packageName)
-                ->plural()
-                ->slug()
-                ->__toString();
+            ->plural()
+            ->slug()
+            ->__toString();
         $this->data['viewDirectory'] = str($packageName)
             ->plural()
             ->studly()
@@ -154,7 +154,7 @@ class CreatePackage extends Command
 
         file_put_contents(
             base_path('composer.json'),
-            json_encode($composer, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . PHP_EOL
+            json_encode($composer, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . PHP_EOL
         );
     }
 
