@@ -3,7 +3,6 @@
 namespace :namespaceVendor:\:namespaceName:\Providers;
 
 use :namespaceVendor:\:namespaceName:\Models\:modelName:;
-use :namespaceVendor:\:namespaceName:\Observers\:className:Observer;
 use Illuminate\Support\ServiceProvider;
 
 class :className:ServiceProvider extends ServiceProvider
@@ -11,8 +10,6 @@ class :className:ServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->providers();
-
-        $this->setObservers();
 
         $this->loadMigrations();
 
@@ -48,11 +45,6 @@ class :className:ServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../../lang/pt_BR' => lang_path('pt_BR'),
         ], ['local-:packageName::translations', 'admix-translations']);
-    }
-
-    private function setObservers(): void
-    {
-        :className:::observe(:className:Observer::class);
     }
 
     private function loadMigrations(): void
