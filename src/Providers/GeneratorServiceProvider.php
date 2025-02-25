@@ -8,37 +8,37 @@ class GeneratorServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        $this->providers();
+        $this->bootProviders();
 
-        $this->loadTranslations();
+        $this->bootTranslations();
 
-        $this->publish();
+        $this->bootPublish();
     }
 
     public function register(): void
     {
-        $this->loadConfigs();
+        $this->registerConfigs();
     }
 
-    private function providers(): void
+    private function bootProviders(): void
     {
         $this->app->register(CommandServiceProvider::class);
     }
 
-    private function publish(): void
+    private function bootPublish(): void
     {
         $this->publishes([
             __DIR__ . '/../../config' => base_path('config'),
         ], 'admix-generator:config');
     }
 
-    private function loadTranslations(): void
+    private function bootTranslations(): void
     {
         $this->loadTranslationsFrom(__DIR__ . '/../../lang', 'admix-generator');
         $this->loadJsonTranslationsFrom(__DIR__ . '/../../lang');
     }
 
-    private function loadConfigs(): void
+    private function registerConfigs(): void
     {
         $this->mergeConfigFrom(__DIR__ . '/../../config/admix-generator.php', 'admix-generator');
     }
