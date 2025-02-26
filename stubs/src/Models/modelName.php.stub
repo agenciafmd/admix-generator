@@ -22,10 +22,6 @@ class :modelName: extends Model implements AuditableContract
 {
     use Auditable, HasFactory, Prunable, SoftDeletes, WithScopes, WithSlug;
 
-    protected $guarded = [
-        //
-    ];
-
     protected array $defaultSort = [
         'is_active' => 'desc',
         'name' => 'asc',
