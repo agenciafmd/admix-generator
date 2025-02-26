@@ -3,5 +3,5 @@
 return [
     'name' => ':packageFriendlyName:',
     'icon' => ':packageIcon:',
-    'sort' => 100,
+    'sort' => 200,
 ];
