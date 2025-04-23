@@ -4,6 +4,8 @@ namespace :namespaceVendor:\:namespaceName:\Http\Components\Aside;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
+use Illuminate\Support\Facades\Gate;
+use :namespaceVendor:\:namespaceName:\Models\:className: as :className:Model;
 
 class :className: extends Component
 {
@@ -23,7 +25,7 @@ class :className: extends Component
         $this->label = __(config('local-:packageName:.name'));
         $this->url = route('admix.:routeName:.index');
         $this->active = request()?->currentRouteNameStartsWith('admix.:routeName:');
-        $this->visible = true;
+        $this->visible = Gate::allows('view', :className:Model::class);
 
         return view('admix::components.aside.item');
     }
